@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 
 const AllPosts = () => {
+  
   const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
   const [updatedPost, setUpdatedPost] = useState({})
