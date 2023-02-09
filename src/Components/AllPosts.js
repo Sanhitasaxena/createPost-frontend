@@ -3,12 +3,12 @@ import axios from "axios";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
+import { BiHomeAlt } from "react-icons/bi";
 
 const AllPosts = () => {
-  
   const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
-  const [updatedPost, setUpdatedPost] = useState({})
+  const [updatedPost, setUpdatedPost] = useState({});
 
   const [show, setShow] = useState(false);
 
@@ -27,29 +27,30 @@ const AllPosts = () => {
   };
 
   const updatePost = (post) => {
-   setUpdatedPost(post)
+    setUpdatedPost(post);
 
-   handleShow()
-  }
+    handleShow();
+  };
 
-  const handleChange = (e)=>{
-    const {name, value} = e.target;
-    setUpdatedPost(Prev => {
-        return({
-            ...Prev, 
-            [name]: value
-        })
-    } )
-  }
-  
-  const saveUpdatedPost = ()=>{
-    axios.put(`/update/${updatedPost._id}`, updatedPost)
-    .then(res => console.log(res))
-    .catch(err => console.log(err))
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUpdatedPost((Prev) => {
+      return {
+        ...Prev,
+        [name]: value,
+      };
+    });
+  };
+
+  const saveUpdatedPost = () => {
+    axios
+      .put(`/update/${updatedPost._id}`, updatedPost)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
 
     handleClose();
-    window.location.reload()
-  }
+    window.location.reload();
+  };
   useEffect(() => {
     axios
       .get("/allpost")
@@ -63,49 +64,62 @@ const AllPosts = () => {
 
   return (
     <>
-      <div className="container text-center">
-        <h1>All posts</h1>
-        <Button
-          onClick={() => navigate(-1)}
-          style={{ width: "30%" }}
-          variant="outline-dark"
+      <div className="container">
+        <div className="d-flex justify-content-evenly p-3"
         >
-          BACK
-        </Button>
+          <BiHomeAlt style={{ fontSize: "2em", marginTop: "30px", cursor: "pointer"}}
+          onClick={() => navigate("/")} />
+          <div className="text-center"
+          style={{width: "90%"}} >
+            <h1>All posts</h1>
+            <Button
+              onClick={() => navigate(-1)}
+              style={{ width: "30%" }}
+              variant="outline-dark"
+            >
+              create post
+            </Button>
+          </div>
+        </div>
         <Modal show={show} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Update Post</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <Form>
-                <Form.Group>
-                    <Form.Control 
-                    style={{marginBottom: "1rem"}}
-                    placeholder="Title"
-                    name="title"
-                    value={updatedPost.title ? updatedPost.title : ""} 
-                    onChange={handleChange}/>
+              <Form.Group>
+                <Form.Control
+                  style={{ marginBottom: "1rem" }}
+                  placeholder="Title"
+                  name="title"
+                  value={updatedPost.title ? updatedPost.title : ""}
+                  onChange={handleChange}
+                />
 
-                    <Form.Control
-                    placeholder="Description"
-                    name="description"
-                    value={updatedPost.description ? updatedPost.description : ""}
-                    onChange={handleChange}/>
-                </Form.Group>
+                <Form.Control
+                  placeholder="Description"
+                  name="description"
+                  value={updatedPost.description ? updatedPost.description : ""}
+                  onChange={handleChange}
+                />
+              </Form.Group>
             </Form>
           </Modal.Body>
-          <Modal.Footer className="d-flex justify-content-evenly" style={{width: "100%"}}>
-            <Button 
-            variant="outline-dark" 
-            onClick={handleClose}
-            style={{width: "40%"}}
+          <Modal.Footer
+            className="d-flex justify-content-evenly"
+            style={{ width: "100%" }}
+          >
+            <Button
+              variant="outline-dark"
+              onClick={handleClose}
+              style={{ width: "40%" }}
             >
               CLOSE
             </Button>
-            <Button 
-            variant="outline-success" 
-            onClick={saveUpdatedPost}
-            style={{width: "40%"}}
+            <Button
+              variant="outline-success"
+              onClick={saveUpdatedPost}
+              style={{ width: "40%" }}
             >
               SAVE
             </Button>
@@ -132,7 +146,7 @@ const AllPosts = () => {
                         style={{ width: "30%" }}
                         variant="outline-primary"
                         // onClick={handleShow}
-                        onClick={()=> updatePost(post)}
+                        onClick={() => updatePost(post)}
                       >
                         UPDATE
                       </Button>

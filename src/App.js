@@ -10,7 +10,7 @@ function App() {
      <Button 
      style={{width: "100%"}}
      variant="outline-dark"
-     onClick={()=> navigate("create")}>NEXT</Button>
+     onClick={()=> navigate("create")}>Create Post</Button>
     </div>
   );
 }
